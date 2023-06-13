@@ -8,7 +8,7 @@ export default {
 </script>
 
 <template>
-  <div class="card">
+  <div class="card p-3">
     <h4 class="title-card">TITOLO: {{ project.title }}</h4>
     <p class="content-card my-2">CONTENUTO: {{ project.content }}</p>
   </div>
