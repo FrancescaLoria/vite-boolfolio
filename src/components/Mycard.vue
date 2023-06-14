@@ -22,6 +22,20 @@ export default {
   <div class="card p-3">
     <h4 class="title-card">TITOLO: {{ project.title }}</h4>
     <p class="content-card my-2">CONTENUTO: {{ pwContent }}</p>
+    <p class="text-primary">
+      <span v-if="project.type">{{ project.type.name }}</span>
+      <span v-else>NESSUNA TIPOLOGIA</span>
+    </p>
+    <p class="text-success">
+      <span v-if="project.technologies.length">
+        <ul>
+          <li v-for="technology in project.technologies" :key="technology.id">
+            {{ technology.name }}
+          </li>
+        </ul>
+      </span>
+      <span v-else>NESSUNA TECNOLOGIA</span>
+    </p>
   </div>
 </template>
 
