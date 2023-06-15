@@ -2,6 +2,7 @@
 import axios from "axios";
 import Mycard from "./components/Mycard.vue";
 import { store } from "./store";
+import Pagination from "./components/Pagination.vue";
 
 export default {
   data() {
@@ -9,7 +10,8 @@ export default {
       projects: [],
       currentPage: 1,
       lastPage: null,
-      totalNumbProject: 0,
+      totalNumbProjects: 0,
+      store,
     };
   },
   mounted() {
@@ -28,11 +30,11 @@ export default {
           this.projects = resp.data.results.data;
           this.currentPage = resp.data.results.current_page;
           this.lastPage = resp.data.results.last_page;
-          this.totalNumbProject = resp.data.results.total;
+          this.totalNumbProjects = resp.data.results.total;
         });
     },
   },
-  components: { Mycard },
+  components: { Mycard, Pagination },
 };
 </script>
 
@@ -48,39 +50,11 @@ export default {
       </div>
     </div>
     <!-- PAGINATION -->
-    <nav
-      v-if="lastPage"
-      aria-label="Page navigation example"
-      class="my-3 d-flex justify-content-end"
-    >
-      <ul class="pagination">
-        <li class="page-item" :class="{ disabled: currentPage === 1 }">
-          <a
-            @click.prevent="getProjects(currentPage - 1)"
-            class="page-link"
-            href="#"
-            >Previous</a
-          >
-        </li>
-        <li
-          class="page-item"
-          :class="{ active: pageNum === currentPage }"
-          v-for="pageNum in lastPage"
-        >
-          <a @click.prevent="getProjects(pageNum)" class="page-link" href="#">{{
-            pageNum
-          }}</a>
-        </li>
-        <li class="page-item" :class="{ disabled: currentPage === lastPage }">
-          <a
-            @click.prevent="getProjects(currentPage + 1)"
-            class="page-link"
-            href="#"
-            >Next</a
-          >
-        </li>
-      </ul>
-    </nav>
+    <Pagination
+      :currentPage="currentPage"
+      :lastPage="lastPage"
+      @changePage="getProjects"
+    />
   </div>
 </template>
 
