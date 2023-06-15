@@ -36,6 +36,11 @@ export default {
       </span>
       <span v-else>NESSUNA TECNOLOGIA</span>
     </p>
+    <router-link
+      :to="{ name: 'single-project', params: { slug: project.slug } }"
+      class="btn btn-primary"
+      >Dettagli</router-link
+    >
   </div>
 </template>
 
