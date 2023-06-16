@@ -4,6 +4,7 @@ import ProjectsPage from "./pages/ProjectsPage.vue";
 import AboutPage from "./pages/AboutPage.vue";
 import ContactPage from "./pages/ContactPage.vue";
 import SingleProjectPage from "./pages/SingleProjectPage.vue";
+import NotFound from "./pages/NotFound.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: "/contact",
       name: "contact",
       component: ContactPage,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: NotFound,
     },
   ],
 });

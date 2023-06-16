@@ -13,14 +13,33 @@ export default {
   },
   mounted() {
     const slug = this.$route.params.slug;
-    axios.get(`${this.store.myUrl}/api/projects/${slug}`).then((resp) => {
-      if (resp.data.success) {
-        this.project = resp.data.results;
-      } else {
-        this.errorMesage = resp.data.error;
+    axios.get(`${this.store.myUrl}/api/projects/${slug}`).then(
+      (resp) => {
+        // if (resp.data.success) {
+        //   this.project = resp.data.results;
+        // } else {
+        //   this.errorMesage = resp.data.error;
+        // }
+        console.log(resp);
+        this.post = resp.data.results;
+      },
+      (error) => {
+        console.log(error.response.status);
+        console.log(error.response.data);
+        if (error.response.status === 404) {
+          this.$router.push({ name: "not-found" });
+        } else {
+          this.errorMessage = "QUALCOSA E' ANDATO STORTO...";
+        }
       }
-    });
+    );
   },
+  // methods: {
+  //   goBack() {
+  //     // this.$router.back();
+  //     this.$router.go(-1);
+  //   },
+  // },
 };
 </script>
 
@@ -32,9 +51,10 @@ export default {
     <div v-if="project">
       <h2>{{ project.title }}</h2>
       <div class="tags my-4">
-        <span v-for="(type, index) in project.types"
-          >#{{ type.name }}
-          {{ index === project.types.length - 1 ? "" : "," }}</span
+        <div class="technology my-3">{{ project.type.name }}</div>
+        <span v-for="(technology, index) in project.technologies"
+          >{{ technology.name }}
+          {{ index === project.technologies.length - 1 ? "" : "," }}</span
         >
       </div>
       <p>
